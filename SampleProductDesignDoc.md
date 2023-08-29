@@ -2,23 +2,33 @@
 
 ## **Problem Statement**
 
-IIT students need study spaces, but there is no way to know where spaces are available and preferred spaces aren&#39;t always utilized efficiently. This is complicated by social distancing requirements. Students may now choose their study time period and place more freely and conveniently allowing them more time to study, thanks to a study room reservation system.
+#1
+Young adults and those short on time can easily input their current ingredients to the app and get professional recipes they are able to make with thorough instructions. This app will save people time, alleviate the stress of planning daily meals, and simplify meal planning.
+
+#2
+Young adults with minimal cooking skills and who are concerned with dietary restrictions or want to become more resourceful with their food will find it easy to prepare meals that optimize their ingredients with just the app while catering to their eating habits. This app will reduce the amount of food waste and promote healthier eating habits by offering different options such as vegetarian, vegan, halal, and etc. 
+
 
 ## **Customer**
 
 ### **Description**
 
-College students who need to study on campus
+- people who cook at home with dietary restrictions (vegetarians/vegans/gluten-free) 
+- parents who have limited time to plan meals and grocery shop 
+- college students/young adults who have limited knowledge of what ingredients go into what dishes
+- people who want to become more resourceful with the food they already have.
 
-Occupation: Undergrad/Grad Student
 
 ## Other Customers and Stakeholders ##
 
-- School Administration, Cleaning and Maintenance Staff, Campus Security, IT Administrators.
+- Food companies?
+- Cookbooks
+- Restaurants
+
 
 ## **Application Type**
 
-Web App
+- Web App
 
 ## **Tech Stack**
 
@@ -44,43 +54,42 @@ MySQL Documentation: [https://docs.oracle.com/cd/E17952\_01/mysql-8.0-en/index.h
 
 ### **Client Tech**
 
-- Web Browser
+- Web app with mobile responsiveness
+React?
+
 
 ### **Server Tech**
 
-- Django (Backend)
-- js (Frontend)
-- MySQL Database
+- Node.js
+- SQL
 
 ## **Top Application Capabilities (name at least 5)**
 
-1. View available study spaces
-     - filter by building, type, number of seats, quietness/loudness,
-2. Reserve a study space for a certain time
-     - limited to maximum time limit (2 hrs)
-3. Modify / Delete reservations
-4. Misconduct reporting system
-5. User authentication
-     - OAuth maybe? require hawk.iit.edu / iit.edu email
-6. Check-in and check-out. Allow temporary leave for breaktime.
-     - rules about length of break
-     - use QR codes to scan
-     - must arrive within certain time of reservation (~20min)
-7. View busiest / least busy study times? -- metrics
+1. Provides breakfast, lunch, dinner recipes options with current ingredients.
+
+2. Shows recipes that require only a few additional ingredients to the ones already available.
+3. Filter list of recipes by dietary restrictions
+4. Show recipe average calorie count and other nutritional value?
+5. Plan meals by saving favorite recipes to lists
+6. Users can rate recipes after using them, users can filter potential recipes by community ratings?
+
 
 ## **Top Two to Three Scenarios**
 
 ### **Your Scenario #1**
 
-Austin has an assignment due in a couple of days. He lives on campus, and his roommate has friends over to hang out. Austin opens the Study Reservation App to find available spots. He looks at spots in MTCC first because that is his favorite location to study. He finds an open study space and reserves it for 5:00pm. It is currently 4:45pm. He walks over and arrives a couple minutes early. There is no one in the study space. He sits down and waits until 5:00pm to check-in to his reservation.
+Meet Sarah, a vegan who is passionate about eating healthy and environmentally friendly meals. She’s always looking for creative vegan recipes, but her busy schedule as a Doctor prevents her from enjoying her time when planning her meals. One evening, Sarah returns home after a long day at work and realizes she only has a few ingredients in her fridge and pantry, so she isn’t sure what she can make out of it. She also doesn’t want to order takeout as she already did the last 3 nights. Frustrated, she decides to try out the Dish Thinker app/website. She enters what ingredients she has on hand, and within seconds, the app/site suggests a delicious and nutritious vegan dish tailored to her dietary preferences. Sarah is delighted with how convenient Dish Thinker is and ends up making a great vegan curry using the app/site provided recipe. It saves her time and ensures that she follows her dietary restrictions. 
+
 
 ### **Your Scenario #2**
 
-Finals week is around the corner. Maria and her peers agree on meeting up at a certain date and time to study together for their physics final. They don&#39;t want to risk having to wait until that day comes so Maria takes initiative by downloading the Study Reservation App. She opens the app and views the busiest days/times that most study rooms are booked and uses that information to decide when to book a study room for her and her peers. As a result, Maria is confident that their study session will go as planned and that they will be prepared for their final exam. Finally, on the day of their study session, Maria simply walks up to their reserved study room and scans the nearby QR code so that they can check in. The scanning of the QR code reveals reservation details, such as their start/end time along with rules of using the study space.
+Mark is a freshly graduated Engineering student who finds himself eating unhealthily and unprepared to plan/make actual meals by himself. Mark’s typical evening involves rushing home, working out, doing laundry, and then trying to figure out what to cook for dinner with the limited ingredients he has on hand. When he first moved into his own place, he found himself spending a lot of money on takeout and eating out. Tonight, he’s determined to use up some leftover chicken, vegetables, and pasta he found in the kitchen. Feeling overwhelmed, Mark decides to give Dish Thinker a shot. He inputs his ingredients into the app/site and almost instantly, it provides him with a recipe for a quick and delicious chicken pesto paste. Mark is impressed with how easy it was to find a suitable recipe that matches his available ingredients, saving him money, and ensuring that he enjoys a tasty meal without the stress of meal planning. 
+
 
 ### **Your Scenario #3**
 
-James has a team project and needs to meet with his 4 teammates outside of class on campus. They need to find a quiet, collaborative space on campus with a whiteboard that can accommodate them. They walk to the Retaliatta building and find the common areas already occupied. They then head on over to the Kaplan Institute building, only to find all of the spaces already in use. They come across a QR code on a classroom door, and after scanning it they find a list of timings which the classroom is not being used for a class. They reserve a convenient time slot from the slots still available and proceed to have an effective collaboration session.
+John is a 17 year old high school student that wants to start learning how to cook. He’s excited about trying new recipes, but doesn’t want to break the bank buying ingredients. John simply inputs the available ingredients he has in his kitchen and Dish Thinker displays all the available recipes he can cook by buying less than 10$ worth of ingredients. Dish Thinker shows step-by-step instructions for each recipe, ensuring that a complete beginner like John can follow along and learn to cook a delicious meal all by himself.
+
 
 ##
 
