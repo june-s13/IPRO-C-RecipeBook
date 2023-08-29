@@ -2,11 +2,9 @@
 
 ## **Problem Statement**
 
-#1
-Young adults and those short on time can easily input their current ingredients to the app and get professional recipes they are able to make with thorough instructions. This app will save people time, alleviate the stress of planning daily meals, and simplify meal planning.
+1. Young adults and those short on time can easily input their current ingredients to the app and get professional recipes they are able to make with thorough instructions. This app will save people time, alleviate the stress of planning daily meals, and simplify meal planning.
 
-#2
-Young adults with minimal cooking skills and who are concerned with dietary restrictions or want to become more resourceful with their food will find it easy to prepare meals that optimize their ingredients with just the app while catering to their eating habits. This app will reduce the amount of food waste and promote healthier eating habits by offering different options such as vegetarian, vegan, halal, and etc. 
+2. Young adults with minimal cooking skills and who are concerned with dietary restrictions or want to become more resourceful with their food will find it easy to prepare meals that optimize their ingredients with just the app while catering to their eating habits. This app will reduce the amount of food waste and promote healthier eating habits by offering different options such as vegetarian, vegan, halal, and etc. 
 
 
 ## **Customer**
@@ -97,12 +95,19 @@ John is a 17 year old high school student that wants to start learning how to co
 
 | **Name** | **Location** | **Time zone offset from Chicago (Chicago is 0 offset)** |
 | --- | --- | --- |
-| Eric Smith | Chicago,IL (Off Campus, Commuter) | 0 |
-| Hannah Jones | Chicago, IL (Off Campus, Online) | 0 |
-| Sameer Johnson | Chicago, IL (Office Campus, Online) | 0 |
-| Xiyuan Brown | Shanghai China (Off Campus Online) | +13h |
+| Kamil | Chicago | 0 |
+| Connor | Chicago | 0 |
+| Thomas | Chicago | 0 |
+| Jacob | Chicago | 0 |
+| Tiffany | Chicago | 0 |
+| Junaid | Chicago | 0 |
 
 ## **Team Working Agreement**
+
+- We will use Github for version control. Team members will push their code to their own branch first, and then merge to the main branch once their task has been completed and the changes have been sufficiently tested.
+- If we need to meet outside of class we have found a mutually agreeable time at: [https://www.when2meet.com/?21083528-NYcbJ](https://www.when2meet.com/?21083528-NYcbJ)
+- We will use Discord to meet outside of class and communicate asynchronously.
+
 
 - We will use Github for version control. Team-members will push their finished code to a branch to ensure the main branch remains bug-free.
 
