@@ -19,7 +19,7 @@
 
 ## Other Customers and Stakeholders ##
 
-- Food companies?
+- Food ingredient companies
 - Cookbooks
 - Restaurants
 
