@@ -1,11 +1,11 @@
-**IPro 497 – Product Design Document**
+# **IPRO 497 – Product Design Document**
 
 
-## Problem statement
+## Problem Statement
 
-1\. Young adults and those short on time can easily input their current ingredients to the app and get professional recipes they are able to make with thorough instructions. This app will save people time, alleviate the stress of planning daily meals, and simplify meal planning.
+1. Young adults and those short on time can easily input their current ingredients to the app and get professional recipes they are able to make with thorough instructions. This app will save people time, alleviate the stress of planning daily meals, and simplify meal planning.
 
-2\. Young adults with minimal cooking skills and who are concerned with dietary restrictions or want to become more resourceful with their food will find it easy to prepare meals that optimize their ingredients with just the app while catering to their eating habits. This app will reduce the amount of food waste and promote healthier eating habits by offering different options such as vegetarian, vegan, halal, and etc.
+2. Young adults with minimal cooking skills and who are concerned with dietary restrictions or want to become more resourceful with their food will find it easy to prepare meals that optimize their ingredients with just the app while catering to their eating habits. This app will reduce the amount of food waste and promote healthier eating habits by offering different options such as vegetarian, vegan, halal, and etc.
 
 
 ## Customer
@@ -151,15 +151,3 @@ John is a 17 year old high school student that wants to start learning how to co
 
 
 ##
-
-## Preferences (for group discussion) 
-
-|          |                             |                                                    |
-| -------- | --------------------------- | -------------------------------------------------- |
-| **Name** | **Backend/Frontend/Either** | **Language/Server tech pref**                      |
-| Kamil    | Either                      | Node.js, SQL, html, css                            |
-| Connor   | Either                      | JavaScript/TypeScript, React, Node.js, Python, SQL |
-| Tiffany  | Backend                     | Python, Java, SQL, C#                              |
-| Thomas   | Frontend                    |                                                    |
-| Jacob    | Backend                     | Python, Java, SQL                                  |
-| Junaid   | Frontend                    | Any                                                |
