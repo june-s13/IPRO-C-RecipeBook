@@ -24,7 +24,6 @@
 
 ### Tech stack
 
-|          |           |                                |
 | -------- | --------- | ------------------------------ |
 | **Name** | **Focus** | **Relevant Tech Skills**       |
 | Connor   | Backend   | Python, SQL, JavaScript, React |
@@ -76,7 +75,6 @@ John is a 17 year old high school student that wants to start learning how to co
 
 ## Team Members
 
-|          |              |                                                         |
 | -------- | ------------ | ------------------------------------------------------- |
 | **Name** | **Location** | **Time zone offset from Chicago (Chicago is 0 offset)** |
 | Kamil    | Chicago      | 0                                                       |
@@ -122,7 +120,6 @@ John is a 17 year old high school student that wants to start learning how to co
 
 ## Sprint Schedule
 
-|                                                                 |                   |
 | :-------------------------------------------------------------: | :---------------: |
 |                             **Week**                            | **Sprint Leader** |
 |                       1 - Problem Framing                       |        N/A        |
@@ -144,14 +141,3 @@ John is a 17 year old high school student that wants to start learning how to co
 
 ##
 
-## Preferences (for group discussion) 
-
-|          |                             |                                                    |
-| -------- | --------------------------- | -------------------------------------------------- |
-| **Name** | **Backend/Frontend/Either** | **Language/Server tech pref**                      |
-| Kamil    | Either                      | Node.js, SQL, html, css                            |
-| Connor   | Either                      | JavaScript/TypeScript, React, Node.js, Python, SQL |
-| Tiffany  | Backend                     | Python, Java, SQL, C#                              |
-| Thomas   | Frontend                    |                                                    |
-| Jacob    | Backend                     | Python, Java, SQL                                  |
-| Junaid   | Frontend                    | Any                                                |
