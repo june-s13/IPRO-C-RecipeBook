@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { IndexPage } from "./pages";
-import { RecipesPage } from "./pages/recipes";
+import { RecipesPage } from "./pages/recipes/recipes.jsx";
 
 const router = createBrowserRouter([
   {
