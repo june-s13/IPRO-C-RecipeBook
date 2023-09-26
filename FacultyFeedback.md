@@ -13,6 +13,9 @@
 ## Week 5 ##
 
 ## Week 6 ##
+- Seems to have a good start on your board 
+- Mid-term presentation 10/16
+- Add a story to for the mid-term presentation slide creation
 
 ## Week 7 ##
 
