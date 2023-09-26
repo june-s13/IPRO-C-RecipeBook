@@ -12,6 +12,7 @@ CREATE TABLE "User" (
 CREATE TABLE Recipe (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
+  instructions TEXT NOT NULL,
   averageCalories INT,
   prepTimeSeconds INT,
   imageUrl TEXT,
