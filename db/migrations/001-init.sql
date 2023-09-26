@@ -14,7 +14,8 @@ CREATE TABLE Recipe (
   name TEXT NOT NULL,
   averageCalories INT,
   prepTimeSeconds INT,
-  imageUrl TEXT
+  imageUrl TEXT,
+  directions TEXT
 );
 
 CREATE TABLE Ingredient (
