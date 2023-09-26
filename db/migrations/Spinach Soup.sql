@@ -7,31 +7,42 @@ VALUES ((SELECT COALESCE(MAX(id), 0) + 1 FROM recipe),
 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.delish.com%2Fcooking%2Frecipe-ideas%2Fa25621667%2Fspinach-soup-recipe%2F&psig=AOvVaw3XFvc5lHajs9ImVKX5rtCg&ust=1695775764850000&source=images&cd=vfe&opi=89978449&ved=0CA8QjRxqFwoTCMCz9pKHx4EDFQAAAAAdAAAAABAE');
 
 INSERT INTO ingredient (id, name) VALUES ((SELECT COALESCE(MAX(id), 0) + 1 FROM ingredient), 'Chopped Spinach');
-INSERT INTO ingredient (id, name) VALUES ((SELECT MAX(id) + 1 FROM ingredient), 'Chopped Onion');
-INSERT INTO ingredient (id, name) VALUES ((SELECT MAX(id) + 1 FROM ingredient), 'Chopped Garlic');
-INSERT INTO ingredient (id, name) VALUES ((SELECT MAX(id) + 1 FROM ingredient), 'Salt');
-INSERT INTO ingredient (id, name) VALUES ((SELECT MAX(id) + 1 FROM ingredient), 'Black Pepper Powder');
-INSERT INTO ingredient (id, name) VALUES ((SELECT MAX(id) + 1 FROM ingredient), 'Milk');
-INSERT INTO ingredient (id, name) VALUES ((SELECT MAX(id) + 1 FROM ingredient), 'Chopped Green Chili');
+INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient), 1, 'cup');
 
-INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient) - 6, 1, 'cup');
-INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient) - 5, 2, 'tsp');
-INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient) - 4, 1, 'tsp');
-INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient) - 3, 0.5, 'tsp');
-INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient) - 2, 0.5, 'tsp');
-INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient) - 1, 1, 'cup');
+INSERT INTO ingredient (id, name) VALUES ((SELECT MAX(id) + 1 FROM ingredient), 'Chopped Onion');
+INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient), 2, 'tsp'); 
+
+INSERT INTO ingredient (id, name) VALUES ((SELECT MAX(id) + 1 FROM ingredient), 'Chopped Garlic');
 INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient), 1, 'tsp'); 
 
-INSERT INTO tag (id, name) VALUES ((SELECT COALESCE(MAX(id), 0) + 1 FROM tag), 'Soup');
-INSERT INTO tag (id, name) VALUES ((SELECT MAX(id) + 1 FROM tag), 'Diabetic');
-INSERT INTO tag (id, name) VALUES ((SELECT MAX(id) + 1 FROM tag), 'Vegetarian');
-INSERT INTO tag (id, name) VALUES ((SELECT MAX(id) + 1 FROM tag), 'Pan Fry');
-INSERT INTO tag (id, name) VALUES ((SELECT MAX(id) + 1 FROM tag), 'Spicy');
-INSERT INTO tag (id, name) VALUES ((SELECT MAX(id) + 1 FROM tag), 'Dinner');
+INSERT INTO ingredient (id, name) VALUES ((SELECT MAX(id) + 1 FROM ingredient), 'Salt');
+INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient), 0.5, 'tsp'); 
 
-INSERT INTO recipe_tag (recipeId, tagId) VALUES ((SELECT MAX(id) FROM recipe), 1);
-INSERT INTO recipe_tag (recipeId, tagId) VALUES ((SELECT MAX(id) FROM recipe), 2);
-INSERT INTO recipe_tag (recipeId, tagId) VALUES ((SELECT MAX(id) FROM recipe), 3);
-INSERT INTO recipe_tag (recipeId, tagId) VALUES ((SELECT MAX(id) FROM recipe), 4);
-INSERT INTO recipe_tag (recipeId, tagId) VALUES ((SELECT MAX(id) FROM recipe), 5);
-INSERT INTO recipe_tag (recipeId, tagId) VALUES ((SELECT MAX(id) FROM recipe), 6);
+INSERT INTO ingredient (id, name) VALUES ((SELECT MAX(id) + 1 FROM ingredient), 'Black Pepper Powder');
+INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient), 0.5, 'tsp'); 
+
+INSERT INTO ingredient (id, name) VALUES ((SELECT MAX(id) + 1 FROM ingredient), 'Milk');
+INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient), 1, 'cup'); 
+
+INSERT INTO ingredient (id, name) VALUES ((SELECT MAX(id) + 1 FROM ingredient), 'Chopped Green Chili');
+INSERT INTO recipe_ingredient (recipeId, ingredientId, requirementAmount, requirementUnit) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM ingredient), 1, 'tsp'); 
+
+
+
+INSERT INTO tag (id, name) VALUES ((SELECT COALESCE(MAX(id), 0) + 1 FROM tag), 'Soup');
+INSERT INTO recipe_tag (recipeId, tagId) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM tag));
+
+INSERT INTO tag (id, name) VALUES ((SELECT MAX(id) + 1 FROM tag), 'Diabetic');
+INSERT INTO recipe_tag (recipeId, tagId) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM tag));
+
+INSERT INTO tag (id, name) VALUES ((SELECT MAX(id) + 1 FROM tag), 'Vegetarian');
+INSERT INTO recipe_tag (recipeId, tagId) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM tag));
+
+INSERT INTO tag (id, name) VALUES ((SELECT MAX(id) + 1 FROM tag), 'Pan Fry');
+INSERT INTO recipe_tag (recipeId, tagId) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM tag));
+
+INSERT INTO tag (id, name) VALUES ((SELECT MAX(id) + 1 FROM tag), 'Spicy');
+INSERT INTO recipe_tag (recipeId, tagId) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM tag));
+
+INSERT INTO tag (id, name) VALUES ((SELECT MAX(id) + 1 FROM tag), 'Dinner');
+INSERT INTO recipe_tag (recipeId, tagId) VALUES ((SELECT MAX(id) FROM recipe), (SELECT MAX(id) FROM tag));
