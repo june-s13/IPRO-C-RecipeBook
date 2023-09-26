@@ -1,4 +1,7 @@
-const express = require('express')
+// load environment variables
+import express from "express";
+import { getAllRecipes } from "./db.js"
+
 const app = express()
 const port = 3000
 
