@@ -1,4 +1,7 @@
-const express = require('express')
+// load environment variables
+import express from "express";
+import { getAllRecipes } from "./db/recipes.js"
+
 const app = express()
 const port = 3000
 
@@ -7,5 +10,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Recipe book server listening on port ${port}`)
 })
