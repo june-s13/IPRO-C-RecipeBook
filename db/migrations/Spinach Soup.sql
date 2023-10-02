@@ -1,4 +1,4 @@
-INSERT INTO recipe (id, name, instructions, averageCalories, prepTimeSeconds, imageurl) 
+INSERT INTO recipe (id, name, directions, averageCalories, prepTimeSeconds, imageurl) 
 VALUES ((SELECT COALESCE(MAX(id), 0) + 1 FROM recipe), 
 'Spinach Soup', 
 '1. In a pan add 1 teaspoon oil and garlic,chilly,onions and stir fry for1 min. 2. Now add spinach and cook for 1 min. 3. Now let it cool 4. Now make pury by adding 1/4 cup water 5. Now take pury in a pan add milk 6. And let it boil for 1 min. 7. Now add salt ,black paper powder 8. Mix well 9. Serve hot', 
