@@ -1,104 +1,57 @@
 import * as React from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import testImage from '../assets/react.svg';
 import { useNavigate } from 'react-router-dom';
 
-// TODO remove, this demo shouldn't need to reset the theme.
+const columns = [
+  { field: 'id', headerName: 'Recipe', width: 130, align:'center', sortable: false},
+  { field: 'image', headerName: 'Image', width: 180, align:'center', sortable: false, renderCell: (params) => <img src={params.value}/> },
+  { field: 'ingNeeded', headerName: '# of ingredients needed', width: 180, align:'center' },
+  { field: 'prepTime', headerName: 'Prep time (minutes)', type: 'number', width: 160, align:'center' },
+  { field: 'calories', headerName: 'Calories per serving', type: 'number', width: 170, align:'center' },
+  { field: 'recipeLink', headerName: 'Recipe link', width: 130, align:'center', sortable: false },
+  { field: 'dietaryInfo', headerName: 'Dietary Info', width: 130, align:'center', sortable: false },
+];
 
-const defaultTheme = createTheme();
+const rows = [
+  { id: "chicken1", image: testImage, ingNeeded: 1, prepTime: 8, calories: 160, recipeLink: "http://", dietaryInfo: "vegan" },
+  { id: "chicken2", image: testImage, ingNeeded: 2, prepTime: 5, calories: 60, recipeLink: "http://", dietaryInfo: "vegan" },
+  { id: "chicken3", image: testImage, ingNeeded: 3, prepTime: 1, calories: 300, recipeLink: "http://", dietaryInfo: "vegan" },
+  { id: "chicken4", image: testImage, ingNeeded: 7, prepTime: 3, calories: 160, recipeLink: "http://", dietaryInfo: "vegan" },
+  { id: "chicken5", image: testImage, ingNeeded: 4, prepTime: 1, calories: 500, recipeLink: "http://", dietaryInfo: "vegan" },
+  { id: "chicken6", image: testImage, ingNeeded: 1, prepTime: 1, calories: 160, recipeLink: "http://", dietaryInfo: "vegan" },
+];
 
-export function IndexPage() {
-  const handleSignIn = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get('username'),
-      password: data.get('password'),
-    });
-  };
-
+export function RecipesPage() {
+  
   const navigate = useNavigate();
 
-  const handleGuest = () => {
-    navigate('/recipes');
+  const handleLogin = () => {
+    navigate('/login');
   };
-
+  
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            Sign In
-          </Typography>
-          <Box component="form" onSubmit={handleSignIn} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-          <Button
-              type="button"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 5, mb: 2 }}
-              onClick={handleGuest}
-            >
-              Continue as Guest
-            </Button>
-        </Box>
-      </Container>
-    </ThemeProvider>
+    <div style={{ height: 400, width: 1100 }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 5 },
+          },
+        }}
+        pageSizeOptions={[5, 10]}
+      />
+      <Button
+        type="button"
+        fullWidth
+        variant="contained"
+        sx={{ mt: 5, mb: 2 }}
+        onClick={handleLogin}
+      >
+        Login
+      </Button>
+    </div>
   );
 }
