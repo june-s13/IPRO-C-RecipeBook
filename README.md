@@ -1,5 +1,14 @@
 # IPRO-C-RecipeBook
 
+## Environment Variables
+
+### Server
+
+```
+PGDATABASE
+PGUSER
+PGPASSWORD
+```
 
 ## Development
 
