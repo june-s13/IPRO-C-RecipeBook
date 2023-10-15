@@ -1,0 +1,46 @@
+import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
+import LocalDining from "@mui/icons-material/LocalDining";
+import StarBorder from "@mui/icons-material/StarBorder";
+import Person from "@mui/icons-material/Person";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
+
+export function Navbar() {
+  const user = useUser();
+
+  const navigate = useNavigate();
+
+  const onNavValueChange = (e, val) => {
+    navigate(val);
+  };
+
+  return (
+    <>
+      <Paper
+        sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+        elevation={3}
+      >
+        <BottomNavigation showLabels onChange={onNavValueChange}>
+          <BottomNavigationAction
+            value="/"
+            label="Recipes"
+            icon={<LocalDining />}
+          />
+          {user ? (
+            <BottomNavigationAction
+              value="/favorites"
+              label="Favorites"
+              icon={<StarBorder />}
+            />
+          ) : (
+            <BottomNavigationAction
+              value="/login"
+              label="Sign in"
+              icon={<Person />}
+            />
+          )}
+        </BottomNavigation>
+      </Paper>
+    </>
+  );
+}
