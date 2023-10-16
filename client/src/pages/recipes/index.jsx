@@ -8,9 +8,14 @@ import {
   CardActions,
   Button,
   Chip,
+  Box,
+  Stack,
 } from "@mui/material";
 import { blue, pink } from "@mui/material/colors";
+import { InputIngredients } from "../../components/InputIngredients/InputIngredients";
+import { useState } from "react";
 
+// TODO: Get recipes from server based on form input
 const rows = [
   {
     id: "chicken1",
@@ -73,52 +78,84 @@ const rows = [
   },
 ];
 
+// TODO: Get list of ingredients from server
+const ingredientOptions = [
+  { ing: "Chicken" },
+  { ing: "White Rice" },
+  { ing: "Pinto Beans" },
+  { ing: "Carrots" },
+  { ing: "Eggs" },
+  { ing: "Bacon" },
+  { ing: "Vanilla" },
+  { ing: "Ham" },
+  { ing: "Yogurt" },
+  { ing: "Super long name for ingredient" },
+];
+
 export function RecipesPage() {
+  /**
+   * Options used for filtering ingredients
+   */
+  const [options, setOptions] = useState({
+    ingredients: [],
+  });
+
   return (
-    <Grid container spacing={4} style={{ padding: 24 }}>
-      {rows.map((recipe) => (
-        <Grid item xs={12} sm={6} md={4} key={recipe.id}>
-          <Card elevation={4}>
-            <CardMedia
-              component="img"
-              height="200"
-              image={recipe.image}
-              alt={recipe.id}
-              style={{ borderTopLeftRadius: 15, borderTopRightRadius: 15 }}
-            />
-            <CardContent>
-              <Typography variant="h6" component="div" gutterBottom>
-                {recipe.id}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
-                Ingredients Needed: {recipe.ingNeeded}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
-                Prep Time: {recipe.prepTime} minutes
-              </Typography>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
-                Calories: {recipe.calories} per serving
-              </Typography>
-              <Chip
-                label={recipe.dietaryInfo}
-                color="primary"
-                style={{ backgroundColor: pink[100] }}
+    <Box sx={{ padding: 2 }}>
+      <Stack sx={{ marginBottom: 2 }} direction="row" justifyContent="center">
+        <InputIngredients
+          ingredientOptions={ingredientOptions}
+          value={options.ingredients}
+          onChange={(e, ingredients) => {
+            setOptions((prev) => ({ ...prev, ingredients }));
+          }}
+        />
+      </Stack>
+      <Grid container spacing={4}>
+        {rows.map((recipe) => (
+          <Grid item xs={12} sm={6} md={4} key={recipe.id}>
+            <Card elevation={4}>
+              <CardMedia
+                component="img"
+                height="200"
+                image={recipe.image}
+                alt={recipe.id}
+                sx={{ borderTopLeftRadius: 15, borderTopRightRadius: 15 }}
               />
-            </CardContent>
-            <CardActions>
-              <Button
-                size="small"
-                color="primary"
-                href={recipe.recipeLink}
-                target="_blank"
-                style={{ color: blue[500] }}
-              >
-                View Recipe
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
+              <CardContent>
+                <Typography variant="h6" component="div" gutterBottom>
+                  {recipe.id}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  Ingredients Needed: {recipe.ingNeeded}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  Prep Time: {recipe.prepTime} minutes
+                </Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  Calories: {recipe.calories} per serving
+                </Typography>
+                <Chip
+                  label={recipe.dietaryInfo}
+                  color="primary"
+                  sx={{ backgroundColor: pink[100] }}
+                />
+              </CardContent>
+              <CardActions>
+                <Button
+                  size="small"
+                  color="primary"
+                  href={recipe.recipeLink}
+                  target="_blank"
+                  sx={{ color: blue[500] }}
+                >
+                  View Recipe
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 }
