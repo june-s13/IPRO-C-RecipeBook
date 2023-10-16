@@ -39,7 +39,7 @@ function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
-      <UserProvider>
+      <UserProvider value={null}>
         <RouterProvider router={router} />
       </UserProvider>
     </ThemeProvider>
