@@ -26,7 +26,11 @@
   - From there we will random presentation order so you could first or last or anywhere in between
 
 ## Week 8 ##
-
+- Why pick smaller audiences like vegetarian, vegan…)
+- I like the way you setup a "user" (Sarah) with your scenario
+- I really like the story you told for Sarah, Matt and John
+- Shouldn't the user indicate the type of dietary restrictions they have?
+- 
 ## Week 9 ##
 
 ## Week 10 ##
