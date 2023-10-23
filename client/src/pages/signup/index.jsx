@@ -15,6 +15,8 @@ export function SignupPage() {
     const data = new FormData(event.currentTarget);
     const username = data.get("username");
     const password = data.get("password");
+    const passwordConfirm = data.get("passwordConfirm")
+    if (password !== passwordConfirm) return;
     auth.register(username, password).then(() => {
       navigate("/");
     });
