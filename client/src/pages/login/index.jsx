@@ -6,18 +6,21 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 export function LoginPage() {
+  const navigate = useNavigate();
+  const auth = useAuth();
+
   const handleSignIn = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
+    const username = data.get("username");
+    const password = data.get("password");
+    auth.login(username, password).then(() => {
+      navigate("/");
     });
   };
-
-  const navigate = useNavigate();
 
   const handleGuest = () => {
     navigate("/");

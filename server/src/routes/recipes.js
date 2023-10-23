@@ -15,6 +15,10 @@ recipesRoute.get("/", async (req, res) => {
 });
 
 recipesRoute.get("/:id", async (req, res) => {
+  if (!req.params.id) {
+    res.sendStatus(400);
+    return;
+  }
   const recipe = await getRecipeById(req.params.id);
   recipe.ingredients = await getIngredientsByRecipeId(recipe.id);
   recipe.tags = await getTagsByRecipeId(recipe.id);
