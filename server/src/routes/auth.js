@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getUserByEmail, registerUser } from "../db/users.js";
-import { compareHash } from "../utils/hash.js";
+import { compareHash, hash } from "../utils/hash.js";
 
 const authRoute = Router();
 
@@ -18,7 +18,8 @@ authRoute.post("/register", async (req, res) => {
     return;
   }
 
-  const user = await registerUser(email, password);
+  const passwordHash = hash(password)
+  const user = await registerUser(email, passwordHash);
 
   setSessionUser(req.session, user.id, user.email);
   res.send({
@@ -35,7 +36,7 @@ authRoute.post("/login", async (req, res) => {
   }
 
   const user = await getUserByEmail(email);
-  if (!compareHash(password, user.password)) {
+  if (!user || !compareHash(password, user.password)) {
     res.sendStatus(401);
     return;
   }

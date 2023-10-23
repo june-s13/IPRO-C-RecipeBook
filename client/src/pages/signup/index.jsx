@@ -1,23 +1,24 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 export function SignupPage() {
+  const navigate = useNavigate();
+  const auth = useAuth();
+
   const handleSignup = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
+    const username = data.get("username");
+    const password = data.get("password");
+    auth.register(username, password).then(() => {
+      navigate("/");
     });
   };
-
-  const navigate = useNavigate();
 
   const handleGuest = () => {
     navigate("/");

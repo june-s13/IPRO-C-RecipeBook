@@ -3,10 +3,10 @@ import LocalDining from "@mui/icons-material/LocalDining";
 import StarBorder from "@mui/icons-material/StarBorder";
 import Person from "@mui/icons-material/Person";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../context/UserContext";
+import { useAuth } from "../context/AuthContext";
 
 export function Navbar() {
-  const user = useUser();
+  const auth = useAuth();
 
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ export function Navbar() {
             label="Recipes"
             icon={<LocalDining />}
           />
-          {user ? (
+          {auth.user ? (
             <BottomNavigationAction
               value="/favorites"
               label="Favorites"

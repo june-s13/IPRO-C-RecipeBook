@@ -1,4 +1,4 @@
-import axios from "./constants";
+import { axios } from "./constants.js";
 
 export async function login(email, password) {
   const res = await axios.request({
@@ -22,7 +22,7 @@ export async function register(email, password) {
 }
 
 export async function logout() {
-  const res = await axios.register({
+  const res = await axios.request({
     url: "/auth/logout",
     method: "POST",
   });
