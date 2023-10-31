@@ -109,6 +109,16 @@ const mealTypes = [
   'Dinner',
 ];
 
+const mealCultures = [
+  'American',
+  'Middle Eastern',
+  'Italian', 
+  'Spanish', 
+  'Chinese',
+  'Indian',
+  'French'
+];
+
 export function RecipesPage() {
   /**
    * Options used for filtering ingredients
@@ -119,6 +129,7 @@ export function RecipesPage() {
   
   const [dietRestriction, setDietRestriction] = useState([]);
   const [mealType, setMealType] = useState([]);
+  const [cultureType, setCultureType] = useState([]);
 
   const handleDiet = (event) => {
     const {
@@ -137,6 +148,15 @@ export function RecipesPage() {
       typeof value === 'string' ? value.split(',') : value,
     );
   };
+  
+  const handleCulture = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setCultureType(
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -148,7 +168,7 @@ export function RecipesPage() {
             setOptions((prev) => ({ ...prev, ingredients }));
           }}
         />
-		<FormControl sx={{ m: 1, width: 260 }} size='small'>
+		<FormControl sx={{ m: 1, width: 200 }} size='small'>
 		  <InputLabel id="diet-restriction-chip-label">Diet</InputLabel>
             <Select
               labelId="diet-restriction-chip-label"
@@ -156,9 +176,9 @@ export function RecipesPage() {
               multiple
               value={dietRestriction}
               onChange={handleDiet}
-              input={<OutlinedInput label="Chip"/>}
+              input={<OutlinedInput label="Diet"/>}
               renderValue={(selected) => (
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, height: 23 }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                   {selected.map((value) => (
                     <Chip key={value} label={value} />
                   ))}
@@ -175,17 +195,17 @@ export function RecipesPage() {
             ))}
             </Select>
         </FormControl>
-		<FormControl sx={{ m: 1, width: 260 }} size='small'>
-		  <InputLabel id="meal-type-chip-label">Meal</InputLabel>
+		<FormControl sx={{ m: 1, width: 200 }} size='small'>
+		  <InputLabel id="meal-type-chip-label">Meal Type</InputLabel>
             <Select
               labelId="meal-type-chip-label"
               id="meal-type-chip"
               multiple
               value={mealType}
               onChange={handleMeal}
-              input={<OutlinedInput label="Chip"/>}
+              input={<OutlinedInput label="Meal Type"/>}
               renderValue={(selected) => (
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, height: 23}}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                   {selected.map((value) => (
                     <Chip key={value} label={value} />
                   ))}
@@ -193,6 +213,33 @@ export function RecipesPage() {
               )}
             >
             {mealTypes.map((name) => (
+              <MenuItem
+                key={name}
+                value={name}
+              >
+              {name}
+              </MenuItem>
+            ))}
+            </Select>
+        </FormControl>
+		<FormControl sx={{ m: 1, width: 200 }} size='small'>
+		  <InputLabel id="meal-culture-chip-label">Culture</InputLabel>
+            <Select
+              labelId="meal-culture-chip-label"
+              id="meal-culture-chip"
+              multiple
+              value={cultureType}
+              onChange={handleCulture}
+              input={<OutlinedInput label="Culture"/>}
+              renderValue={(selected) => (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+            >
+            {mealCultures.map((name) => (
               <MenuItem
                 key={name}
                 value={name}
