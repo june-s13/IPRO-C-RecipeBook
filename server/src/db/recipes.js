@@ -1,6 +1,6 @@
 import { pool } from "./client.js";
 
-const convertRecipe = (recipe) => ({
+export const convertRecipe = (recipe) => ({
   id: recipe.id,
   name: recipe.name,
   averageCalories: recipe.averagecalories,
