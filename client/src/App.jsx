@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { LoginPage } from "./pages/login/index.jsx";
 import { RecipesPage } from "./pages/recipes/index.jsx";
+import { ViewRecipiePage } from "./pages/viewrecipie/index.jsx";
 import { Root } from "./pages/index.jsx";
 import { FavoritesPage } from "./pages/favorites/index.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -20,6 +21,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <RecipesPage />,
+      },
+	  {
+        path: "/viewrecipie",
+        element: (
+          <UnauthenticatedOnly>
+            <ViewRecipiePage />
+          </UnauthenticatedOnly>
+        ),
       },
       {
         path: "/favorites",

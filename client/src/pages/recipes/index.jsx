@@ -19,6 +19,7 @@ import {
 import { blue, pink } from "@mui/material/colors";
 import { InputIngredients } from "../../components/InputIngredients/InputIngredients";
 import { useState } from "react";
+import {Link, useNavigate} from 'react-router-dom'
 
 // TODO: Get recipes from server based on form input
 const rows = [
@@ -130,6 +131,11 @@ export function RecipesPage() {
   const [dietRestriction, setDietRestriction] = useState([]);
   const [mealType, setMealType] = useState([]);
   const [cultureType, setCultureType] = useState([]);
+
+  const navigate = useNavigate();
+  const toRecipieComponent=(ingNeeded, prepTime, calories)=>{
+	navigate('/viewrecipie',{state:{ingNeeded:ingNeeded, prepTime:prepTime, calories:calories}});
+  }
 
   const handleDiet = (event) => {
     const {
@@ -284,9 +290,9 @@ export function RecipesPage() {
                 <Button
                   size="small"
                   color="primary"
-                  href={recipe.recipeLink}
                   target="_blank"
                   sx={{ color: blue[500] }}
+				  onClick={()=>{toRecipieComponent(recipe.ingNeeded, recipe.prepTime, recipe.calories)}}
                 >
                   View Recipe
                 </Button>
