@@ -30,7 +30,12 @@ export function RecipePage() {
             <Typography variant="h4" component="div" gutterBottom>
               {recipe.name}
             </Typography>
-            <Typography variant="body" color="text.secondary" gutterBottom sx={{display: "block"}}>
+            <Typography
+              variant="body"
+              color="text.secondary"
+              gutterBottom
+              sx={{ display: "block" }}
+            >
               Prep Time: {recipe.prepTimeSeconds / 60} minutes
             </Typography>
             <Typography variant="body" color="text.secondary" gutterBottom>
@@ -41,7 +46,7 @@ export function RecipePage() {
               justifyContent="flex-start"
               gap={1}
               flexWrap="wrap"
-              sx={{ marginY: 3}}
+              sx={{ marginY: 3 }}
             >
               {recipe.tags.map((tag) => (
                 <Chip key={tag.id} label={tag.name} color="secondary" />
@@ -49,7 +54,9 @@ export function RecipePage() {
             </Stack>
             <Typography variant="h5">Directions</Typography>
             <Typography variant="body" color="text.primary">
-              {recipe.directions.split("\n").map(pgh => <p>{pgh}</p>)}
+              {recipe.directions.split("\n").map((pgh, idx) => (
+                <p key={idx}>{pgh}</p>
+              ))}
             </Typography>
           </CardContent>
         </Card>
