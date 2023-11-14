@@ -62,6 +62,44 @@ export function RecipesPage() {
 
   const fetchRecipes = () => recipesResult.refetch();
 
+  function filterRecipes(r) {
+    let matchingDiet = false;
+    let matchingType = false;
+    let matchingCulture = false;
+
+    if (dietRestriction.length === 0) {
+      matchingDiet = true;
+    }
+
+    for (let i = 0; i < dietRestriction.length; i++) {
+      if (r.tags.find(tag => tag.name === dietRestriction[i])) {
+        matchingDiet = true;
+      }
+    }
+
+    if (mealType.length === 0) {
+      matchingType = true;
+    }
+
+    for (let i = 0; i < mealType.length; i++) {
+      if (r.tags.find(tag => tag.name === mealType[i])) {
+        matchingType = true;
+      }
+    }
+
+    if (cultureType.length == 0) {
+      matchingCulture = true;
+    }
+
+    for (let i = 0; i < cultureType.length; i++) {
+      if (r.tags.find(tag => tag.name === cultureType[i])) {
+        matchingCulture = true;
+      }
+    }
+
+    return (matchingDiet && matchingType && matchingCulture)
+  }
+
   const [dietRestriction, setDietRestriction] = useState([]);
   const [mealType, setMealType] = useState([]);
   const [cultureType, setCultureType] = useState([]);
@@ -190,7 +228,7 @@ export function RecipesPage() {
       </Stack>
       {recipesResult.isSuccess ? (
         <Grid container spacing={4}>
-          {recipesResult.data.map((recipe) => (
+          {recipesResult.data.filter(filterRecipes).map((recipe) => (
             <Grid item xs={12} sm={6} md={4} key={recipe.id}>
               <Card elevation={4}>
                 <CardMedia
