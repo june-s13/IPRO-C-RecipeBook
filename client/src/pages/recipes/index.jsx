@@ -30,7 +30,9 @@ const rows = [
     prepTime: 8,
     calories: 160,
     recipeLink: "http://",
-    dietaryInfo: "vegan",
+    dietaryInfo: "",
+    mealType: "breakfast",
+    culture: "american"
   },
 
   {
@@ -41,6 +43,8 @@ const rows = [
     calories: 60,
     recipeLink: "http://",
     dietaryInfo: "vegan",
+    mealType: "breakfast",
+    culture: "american"
   },
 
   {
@@ -50,7 +54,9 @@ const rows = [
     prepTime: 1,
     calories: 300,
     recipeLink: "http://",
-    dietaryInfo: "vegan",
+    dietaryInfo: "halal",
+    mealType: "lunch",
+    culture: "american"
   },
 
   {
@@ -60,7 +66,9 @@ const rows = [
     prepTime: 3,
     calories: 160,
     recipeLink: "http://",
-    dietaryInfo: "vegan",
+    dietaryInfo: "vegetarian",
+    mealType: "lunch",
+    culture: "italian"
   },
 
   {
@@ -70,7 +78,9 @@ const rows = [
     prepTime: 1,
     calories: 500,
     recipeLink: "http://",
-    dietaryInfo: "vegan",
+    dietaryInfo: "",
+    mealType: "dinner",
+    culture: "american"
   },
 
   {
@@ -81,6 +91,8 @@ const rows = [
     calories: 160,
     recipeLink: "http://",
     dietaryInfo: "vegan",
+    mealType: "dinner",
+    culture: "french"
   },
 ];
 
@@ -124,6 +136,7 @@ export function RecipesPage() {
   /**
    * Options used for filtering ingredients
    */
+   
   const [options, setOptions] = useState({
     ingredients: [],
   });
@@ -131,6 +144,45 @@ export function RecipesPage() {
   const [dietRestriction, setDietRestriction] = useState([]);
   const [mealType, setMealType] = useState([]);
   const [cultureType, setCultureType] = useState([]);
+  
+  const filteredRows = rows;
+  function filterRecipes(foo) {
+    let matchingDiet = false;
+    let matchingType = false;
+    let matchingCulture = false;
+
+    if (dietRestriction.length === 0) {
+      matchingDiet = true;
+    }
+
+    for (let i = 0; i < dietRestriction.length; i++) {
+      if (foo.dietaryInfo === dietRestriction[i].toLowerCase()) {
+        matchingDiet = true;
+      }
+    }
+
+    if (mealType.length === 0) {
+      matchingType = true;
+    }
+
+    for (let i = 0; i < mealType.length; i++) {
+      if (foo.mealType === mealType[i].toLowerCase()) {
+        matchingType = true;
+      }
+    }
+
+    if (cultureType.length == 0) {
+      matchingCulture = true;
+    }
+
+    for (let i = 0; i < cultureType.length; i++) {
+      if (foo.culture === cultureType[i].toLowerCase()) {
+        matchingCulture = true;
+      }
+    }
+
+    return (matchingDiet && matchingType && matchingCulture)
+  }
 
   const navigate = useNavigate();
   const toRecipieComponent=(ingNeeded, prepTime, calories)=>{
@@ -257,7 +309,7 @@ export function RecipesPage() {
         </FormControl>
       </Stack>
       <Grid container spacing={4}>
-        {rows.map((recipe) => (
+        {rows.filter(filterRecipes).map((recipe) => (
           <Grid item xs={12} sm={6} md={4} key={recipe.id}>
             <Card elevation={4}>
               <CardMedia
@@ -282,6 +334,16 @@ export function RecipesPage() {
                 </Typography>
                 <Chip
                   label={recipe.dietaryInfo}
+                  color="primary"
+                  sx={{ backgroundColor: pink[100] }}
+                />
+                <Chip
+                  label={recipe.mealType}
+                  color="primary"
+                  sx={{ backgroundColor: pink[100] }}
+                />
+                <Chip
+                  label={recipe.culture}
                   color="primary"
                   sx={{ backgroundColor: pink[100] }}
                 />
