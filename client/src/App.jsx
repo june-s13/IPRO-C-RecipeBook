@@ -1,7 +1,10 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import { LoginPage } from "./pages/login/index.jsx";
 import { RecipesPage } from "./pages/recipes/index.jsx";
-import { ViewRecipiePage } from "./pages/viewrecipie/index.jsx";
 import { Root } from "./pages/index.jsx";
 import { FavoritesPage } from "./pages/favorites/index.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -12,6 +15,8 @@ import {
   AuthenticatedOnly,
   UnauthenticatedOnly,
 } from "./components/ProtectedRoute.jsx";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { RecipePage } from "./pages/recipes/recipe.jsx";
 
 const router = createBrowserRouter([
   {
@@ -22,14 +27,6 @@ const router = createBrowserRouter([
         index: true,
         element: <RecipesPage />,
       },
-	  {
-        path: "/viewrecipie",
-        element: (
-          <UnauthenticatedOnly>
-            <ViewRecipiePage />
-          </UnauthenticatedOnly>
-        ),
-      },
       {
         path: "/favorites",
         element: (
@@ -37,6 +34,19 @@ const router = createBrowserRouter([
             <FavoritesPage />
           </AuthenticatedOnly>
         ),
+      },
+      {
+        path: "/recipes",
+        children: [
+          {
+            index: true,
+            element: <Navigate to="/" />,
+          },
+          {
+            path: ":recipeId",
+            element: <RecipePage />,
+          },
+        ],
       },
     ],
   },
@@ -61,13 +71,18 @@ const router = createBrowserRouter([
 // MUI Theme
 const defaultTheme = createTheme();
 
+// React-query Client
+const queryClient = new QueryClient();
+
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <CookiesProvider>
         <AuthProvider>
-          <RouterProvider router={router} />
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+          </QueryClientProvider>
         </AuthProvider>
       </CookiesProvider>
     </ThemeProvider>
