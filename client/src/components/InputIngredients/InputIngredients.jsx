@@ -177,9 +177,9 @@ export function InputIngredients({ ingredientOptions, value: controlledValue, on
     multiple: true,
     options: ingredientOptions,
     value: controlledValue,
-    isOptionEqualToValue: (o, v) => o === v,
+    isOptionEqualToValue: (o, v) => o.id === v.id,
     onChange,
-    getOptionLabel: (option) => option.ing,
+    getOptionLabel: (option) => option.label,
   });
 
   return (
