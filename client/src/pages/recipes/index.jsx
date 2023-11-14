@@ -14,12 +14,16 @@ import {
   InputLabel,
   MenuItem,
   FormControl,
-  Select
+  Select,
+  IconButton
 } from "@mui/material";
 import { blue, pink } from "@mui/material/colors";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { InputIngredients } from "../../components/InputIngredients/InputIngredients";
 import { useState } from "react";
-import {Link, useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../context/AuthContext";
 
 // TODO: Get recipes from server based on form input
 const rows = [
@@ -164,6 +168,22 @@ export function RecipesPage() {
     );
   };
 
+  const auth = useAuth();
+
+  // TODO: Get favorites from server based on user data
+  const favorites = rows;
+
+  const [isFavoriteArray, setIsFavoriteArray] = useState(Array(rows.length).fill(false));
+
+  const handleFavoriteToggle = (index) => {
+    setIsFavoriteArray((prevIsFavoriteArray) => {
+      const newIsFavoriteArray = [...prevIsFavoriteArray];
+      newIsFavoriteArray[index] = !newIsFavoriteArray[index];
+      return newIsFavoriteArray;
+    });
+  };
+
+
   return (
     <Box sx={{ padding: 2 }}>
       <Stack sx={{ marginBottom: 2 }} direction="row" justifyContent="center">
@@ -257,7 +277,7 @@ export function RecipesPage() {
         </FormControl>
       </Stack>
       <Grid container spacing={4}>
-        {rows.map((recipe) => (
+        {rows.map((recipe, index) => (
           <Grid item xs={12} sm={6} md={4} key={recipe.id}>
             <Card elevation={4}>
               <CardMedia
@@ -287,12 +307,21 @@ export function RecipesPage() {
                 />
               </CardContent>
               <CardActions>
+                {auth.user && (  
+                  <IconButton size="large" color="primary" onClick={() => handleFavoriteToggle(index)}>
+                    {isFavoriteArray[index] ? (
+                      <FavoriteIcon color="primary" />
+                    ) : (
+                      <FavoriteBorderIcon color="primary" />
+                    )}
+                  </IconButton>
+                )}
                 <Button
                   size="small"
                   color="primary"
                   target="_blank"
                   sx={{ color: blue[500] }}
-				  onClick={()=>{toRecipieComponent(recipe.ingNeeded, recipe.prepTime, recipe.calories)}}
+				          onClick={()=>{toRecipieComponent(recipe.ingNeeded, recipe.prepTime, recipe.calories)}}
                 >
                   View Recipe
                 </Button>
