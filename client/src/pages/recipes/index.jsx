@@ -19,7 +19,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { blue, pink } from "@mui/material/colors";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getIngredients } from "../../api/ingredients";
@@ -49,30 +49,33 @@ export function RecipesPage() {
   /**
    * Options used for filtering ingredients
    */
-  const [options, setOptions] = useState({
-    ingredients: [],
-  });
+  const [ingredients, setIngredients] = useState([]);
+  const [dietRestriction, setDietRestriction] = useState([]);
+  const [mealType, setMealType] = useState([]);
+  const [cultureType, setCultureType] = useState([]);
 
   const recipesResult = useQuery({
     queryKey: ["recipes"],
     queryFn: () => getRecipes(),
     initialData: [],
-    enabled: false, // query fetch triggered by .refetch() on button
   });
-
-  const fetchRecipes = () => recipesResult.refetch();
 
   function filterRecipes(r) {
     let matchingDiet = false;
     let matchingType = false;
     let matchingCulture = false;
+    let matchingIngredients = false;
+
+    if (ingredients.length === 0 || !ingredients.find(ing => !r.ingredients.find(rIng => rIng.id === ing.id))) {
+      matchingIngredients = true;
+    }
 
     if (dietRestriction.length === 0) {
       matchingDiet = true;
     }
 
     for (let i = 0; i < dietRestriction.length; i++) {
-      if (r.tags.find(tag => tag.name === dietRestriction[i])) {
+      if (r.tags.find((tag) => tag.name === dietRestriction[i])) {
         matchingDiet = true;
       }
     }
@@ -82,7 +85,7 @@ export function RecipesPage() {
     }
 
     for (let i = 0; i < mealType.length; i++) {
-      if (r.tags.find(tag => tag.name === mealType[i])) {
+      if (r.tags.find((tag) => tag.name === mealType[i])) {
         matchingType = true;
       }
     }
@@ -92,17 +95,13 @@ export function RecipesPage() {
     }
 
     for (let i = 0; i < cultureType.length; i++) {
-      if (r.tags.find(tag => tag.name === cultureType[i])) {
+      if (r.tags.find((tag) => tag.name === cultureType[i])) {
         matchingCulture = true;
       }
     }
 
-    return (matchingDiet && matchingType && matchingCulture)
+    return matchingIngredients && matchingDiet && matchingType && matchingCulture;
   }
-
-  const [dietRestriction, setDietRestriction] = useState([]);
-  const [mealType, setMealType] = useState([]);
-  const [cultureType, setCultureType] = useState([]);
 
   const handleDiet = (event) => {
     const {
@@ -125,6 +124,24 @@ export function RecipesPage() {
     setCultureType(typeof value === "string" ? value.split(",") : value);
   };
 
+  const sortRecipesBy = "numMissingIngredients"
+  const sortRecipesOrder = "asc"
+
+  const recipes = useMemo(() => {
+    return recipesResult.data.filter(filterRecipes).map(recipe => {
+      const numMissingIngredients = recipe.ingredients.filter(rIng => !ingredients.find(ing => ing.id === rIng.id)).length
+      return {
+        ...recipe,
+        numMissingIngredients
+      }
+    }).sort((a, b) => {
+      switch (sortRecipesBy) {
+        case "numMissingIngredients":
+          return a.numMissingIngredients - b.numMissingIngredients
+      }
+    })
+  }, [recipesResult, ingredients, dietRestriction, mealType, cultureType, sortRecipesBy])
+
   return (
     <Box sx={{ padding: 2 }}>
       <Stack sx={{ marginBottom: 2 }} direction="row" justifyContent="center">
@@ -133,10 +150,8 @@ export function RecipesPage() {
             multiple
             loading={ingredientsResult.isLoading}
             options={ingredientsResult.data}
-            value={options.ingredients}
-            onChange={(e, ingredients) => {
-              setOptions((prev) => ({ ...prev, ingredients }));
-            }}
+            value={ingredients}
+            onChange={(e, ingredients) => setIngredients(ingredients)}
             isOptionEqualToValue={(o, v) => o.id === v.id}
             getOptionLabel={(i) => i.name}
             renderInput={(params) => (
@@ -217,7 +232,7 @@ export function RecipesPage() {
           </Select>
         </FormControl>
       </Stack>
-      <Stack direction="row" justifyContent="center" sx={{ marginBottom: 2 }}>
+      {/* <Stack direction="row" justifyContent="center" sx={{ marginBottom: 2 }}>
         <Button
           variant="contained"
           onClick={fetchRecipes}
@@ -225,11 +240,11 @@ export function RecipesPage() {
         >
           Search
         </Button>
-      </Stack>
+      </Stack> */}
       {recipesResult.isSuccess ? (
         <Grid container spacing={4}>
-          {recipesResult.data.filter(filterRecipes).map((recipe) => (
-            <Grid item xs={12} sm={6} md={4} key={recipe.id}>
+          {recipes.map((recipe) => {
+            return <Grid item xs={12} sm={6} md={4} key={recipe.id}>
               <Card elevation={4}>
                 <CardMedia
                   component="img"
@@ -247,7 +262,7 @@ export function RecipesPage() {
                     color="text.secondary"
                     gutterBottom
                   >
-                    Ingredients Needed: TODO
+                    Ingredients Needed: {recipe.numMissingIngredients}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -270,11 +285,7 @@ export function RecipesPage() {
                     flexWrap="wrap"
                   >
                     {recipe.tags.map((tag) => (
-                      <Chip
-                        key={tag.id}
-                        label={tag.name}
-                        color="secondary"
-                      />
+                      <Chip key={tag.id} label={tag.name} color="secondary" />
                     ))}
                   </Stack>
                 </CardContent>
@@ -291,8 +302,8 @@ export function RecipesPage() {
                   </Link>
                 </CardActions>
               </Card>
-            </Grid>
-          ))}
+            </Grid> }
+          )}
         </Grid>
       ) : recipesResult.isLoading ? (
         <CircularProgress />

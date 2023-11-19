@@ -72,7 +72,13 @@ const router = createBrowserRouter([
 const defaultTheme = createTheme();
 
 // React-query Client
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false
+    }
+  }
+});
 
 function App() {
   return (
