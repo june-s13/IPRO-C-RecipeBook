@@ -52,6 +52,13 @@ export function RecipePage() {
                 <Chip key={tag.id} label={tag.name} color="secondary" />
               ))}
             </Stack>
+            <Typography variant="h5">Ingredients</Typography>
+
+            <Typography variant="body" color="text.primary">
+              {recipe.ingredients.map((ing) => (
+                <p key={ing.id}>{ing.requirementAmount} {ing.requirementUnit} {ing.name}</p>
+              ))}
+            </Typography>
             <Typography variant="h5">Directions</Typography>
             <Typography variant="body" color="text.primary">
               {recipe.directions.split("\n").map((pgh, idx) => (
