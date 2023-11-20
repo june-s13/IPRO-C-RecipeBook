@@ -191,7 +191,14 @@ export function RecipesPage() {
                       color="text.secondary"
                       gutterBottom
                     >
-                      Ingredients Needed: {recipe.numMissingIngredients}
+                      {recipe.numMissingIngredients} more ingredients needed
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      {recipe.averageCalories} calories per serving
                     </Typography>
                     <Typography
                       variant="body2"
@@ -199,13 +206,6 @@ export function RecipesPage() {
                       gutterBottom
                     >
                       Prep Time: {recipe.prepTimeSeconds / 60} minutes
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      gutterBottom
-                    >
-                      Calories: {recipe.averageCalories} per serving
                     </Typography>
                     <Stack
                       direction="row"
