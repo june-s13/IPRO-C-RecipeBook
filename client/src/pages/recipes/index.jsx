@@ -285,7 +285,7 @@ export function RecipesPage() {
                     flexWrap="wrap"
                   >
                     {recipe.tags.map((tag) => (
-                      <Chip key={tag.id} label={tag.name} color="secondary" />
+                      <Chip key={tag.id} size="small" label={tag.name} color="secondary" />
                     ))}
                   </Stack>
                 </CardContent>
