@@ -56,7 +56,7 @@ export function RecipePage() {
 
             <Typography variant="body" color="text.primary">
               {recipe.ingredients.map((ing) => (
-                <p key={ing.id}>{ing.requirementAmount} {ing.requirementUnit} {ing.name}</p>
+                <p key={ing.id}>{ing.requirementAmount !== 0 ? ing.requirementAmount + " " : ""}{ing.requirementUnit !== "<unit>" ? ing.requirementUnit + " " : ""}{ing.name}</p>
               ))}
             </Typography>
             <Typography variant="h5">Directions</Typography>
