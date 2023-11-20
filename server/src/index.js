@@ -5,6 +5,7 @@ import { ingredientsRoute } from "./routes/ingredients.js";
 import { session } from "./middleware/session.js";
 import { authRoute } from "./routes/auth.js";
 import { favoritesRoute } from "./routes/favorites.js";
+import { tagsRoute } from "./routes/tags.js";
 
 const app = express();
 const PORT = 3000;
@@ -23,6 +24,7 @@ app.use("/recipes", recipesRoute);
 app.use("/ingredients", ingredientsRoute);
 app.use("/auth", authRoute);
 app.use("/favorites", favoritesRoute);
+app.use("/tags", tagsRoute);
 
 app.listen(PORT, () => {
   console.log(`Recipe book server listening on port ${PORT}`);
