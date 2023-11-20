@@ -17,6 +17,7 @@ import {
   Autocomplete,
   TextField,
   CircularProgress,
+  IconButton
 } from "@mui/material";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
@@ -24,6 +25,12 @@ import { useQuery } from "react-query";
 import { getIngredients } from "../../api/ingredients";
 import { getRecipes } from "../../api/recipes";
 import { getTags } from "../../api/tags";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { useAuth } from "../../context/AuthContext";
+
 
 // const dietRestrictions = ["Vegetarian", "Vegan", "Halal"];
 // const mealTypes = ["Breakfast", "Lunch", "Dinner"];
@@ -119,6 +126,27 @@ export function RecipesPage() {
     sortRecipesBy,
   ]);
 
+  const [favoriteStatus, setFavoriteStatus] = useState({});
+  const [ratings, setRatings] = useState({});
+
+  const handleToggleFavorite = (recipeId) => {
+    // Toggle the favorite state for the specific recipe
+    setFavoriteStatus((prevStatus) => ({
+      ...prevStatus,
+      [recipeId]: !prevStatus[recipeId],
+    }));
+  };
+
+  const handleRateRecipe = (recipeId, rating) => {
+    // Set the rating for the specific recipe
+    setRatings((prevRatings) => ({
+      ...prevRatings,
+      [recipeId]: rating,
+    }));
+  };
+
+  const auth = useAuth();
+
   return (
     <Box sx={{ padding: 2 }}>
       <Stack sx={{ marginBottom: 2 }} direction="column" justifyContent="center">
@@ -172,6 +200,9 @@ export function RecipesPage() {
       {recipesResult.isSuccess ? (
         <Grid container spacing={4}>
           {recipes.map((recipe) => {
+            const isFavorite = favoriteStatus[recipe.id] || false;
+            const rating = ratings[recipe.id] || 0;
+
             return (
               <Grid item xs={12} sm={6} md={4} key={recipe.id}>
                 <Card elevation={4}>
@@ -234,6 +265,23 @@ export function RecipesPage() {
                         View Recipe
                       </Button>
                     </Link>
+                    {auth.user && (
+                      <>
+                        <IconButton color="primary" onClick={() => handleToggleFavorite(recipe.id)}>
+                          {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                        </IconButton>
+                        
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <IconButton
+                            key={star}
+                            color="primary"
+                            onClick={() => handleRateRecipe(recipe.id, star)}
+                          >
+                            {rating >= star ? <StarIcon /> : <StarBorderIcon />}
+                          </IconButton>
+                        ))}
+                      </>
+                    )}
                   </CardActions>
                 </Card>
               </Grid>
