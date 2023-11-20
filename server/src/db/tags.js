@@ -7,3 +7,8 @@ export async function getTagsByRecipeId(recipeId) {
   );
   return res.rows;
 }
+
+export async function getTags() {
+  const res = await pool.query("SELECT id, name FROM Tag")
+  return res.rows;
+}
