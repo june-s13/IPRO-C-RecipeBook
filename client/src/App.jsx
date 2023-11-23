@@ -17,6 +17,7 @@ import {
 } from "./components/ProtectedRoute.jsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { RecipePage } from "./pages/recipes/recipe.jsx";
+import { UserPage } from "./pages/user/index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,14 @@ const router = createBrowserRouter([
         element: (
           <AuthenticatedOnly>
             <FavoritesPage />
+          </AuthenticatedOnly>
+        ),
+      },
+      {
+        path: "/user",
+        element: (
+          <AuthenticatedOnly>
+            <UserPage />
           </AuthenticatedOnly>
         ),
       },
@@ -75,9 +84,9 @@ const defaultTheme = createTheme();
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false
-    }
-  }
+      refetchOnWindowFocus: false,
+    },
+  },
 });
 
 function App() {
