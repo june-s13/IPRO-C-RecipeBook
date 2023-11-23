@@ -27,11 +27,20 @@ export function Navbar() {
             icon={<LocalDining />}
           />
           {auth.user ? (
-            <BottomNavigationAction
-              value="/favorites"
-              label="Favorites"
-              icon={<StarBorder />}
-            />
+            [
+              <BottomNavigationAction
+                key="favs"
+                value="/favorites"
+                label="Favorites"
+                icon={<StarBorder />}
+              />,
+              <BottomNavigationAction
+                key="user"
+                value="/user"
+                label="User"
+                icon={<Person />}
+              />,
+            ]
           ) : (
             <BottomNavigationAction
               value="/login"

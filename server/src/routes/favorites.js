@@ -4,16 +4,13 @@ import {
   userFavoritesRecipe,
   userUnfavoritesRecipe,
 } from "../db/favorites.js";
+import { protectedRoute } from "../middleware/protected-route.js";
+import { getIngredientsByRecipeId } from "../db/ingredients.js";
+import { getTagsByRecipeId } from "../db/tags.js";
 
 const favoritesRoute = Router();
 
-favoritesRoute.use((req, res, next) => {
-  if (req.session.user) {
-    next();
-  } else {
-    res.sendStatus(401);
-  }
-});
+favoritesRoute.use(protectedRoute);
 
 favoritesRoute.get("/", async (req, res) => {
   const user = req.session.user;

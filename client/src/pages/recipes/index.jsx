@@ -1,50 +1,25 @@
 import {
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
   Grid,
-  CardActions,
-  Button,
   Chip,
   Box,
   Stack,
-  OutlinedInput,
-  InputLabel,
-  MenuItem,
   FormControl,
-  Select,
   Autocomplete,
   TextField,
   CircularProgress,
-  IconButton
 } from "@mui/material";
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getIngredients } from "../../api/ingredients";
 import { getRecipes } from "../../api/recipes";
 import { getTags } from "../../api/tags";
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useAuth } from "../../context/AuthContext";
-
-
-// const dietRestrictions = ["Vegetarian", "Vegan", "Halal"];
-// const mealTypes = ["Breakfast", "Lunch", "Dinner"];
-// const mealCultures = [
-//   "American",
-//   "Middle Eastern",
-//   "Italian",
-//   "Spanish",
-//   "Chinese",
-//   "Indian",
-//   "French",
-// ];
+import { favoriteRecipe, unfavoriteRecipe } from "../../api/favorites";
+import { RecipeCard } from "../../components/recipe-card";
 
 export function RecipesPage() {
+  const queryClient = useQueryClient();
+
   const ingredientsResult = useQuery({
     queryKey: ["ingredients"],
     queryFn: getIngredients,
@@ -57,20 +32,47 @@ export function RecipesPage() {
     initialData: [],
   });
 
+  const recipesResult = useQuery({
+    queryKey: ["recipes"],
+    queryFn: getRecipes,
+    initialData: [],
+  });
+
+  const favoriteRecipeMutation = useMutation({
+    mutationFn: favoriteRecipe,
+    onSuccess: (_, recipeId) => {
+      queryClient.setQueryData(["recipes"], (recipes) =>
+        recipes.map((recipe) =>
+          recipe.id === recipeId ? { ...recipe, isFavorite: true } : recipe
+        )
+      );
+    },
+  });
+
+  const unfavoriteRecipeMutation = useMutation({
+    mutationFn: unfavoriteRecipe,
+    onSuccess: (_, recipeId) => {
+      queryClient.setQueryData(["recipes"], (recipes) =>
+        recipes.map((recipe) =>
+          recipe.id === recipeId ? { ...recipe, isFavorite: false } : recipe
+        )
+      );
+    },
+  });
+
+  const onFavoriteRecipe = async (recipeId) => {
+    await favoriteRecipeMutation.mutateAsync(recipeId);
+  };
+
+  const onUnfavoriteRecipe = async (recipeId) => {
+    await unfavoriteRecipeMutation.mutateAsync(recipeId);
+  };
+
   /**
    * Options used for filtering ingredients
    */
   const [ingredients, setIngredients] = useState([]);
   const [tags, setTags] = useState([]);
-  const [dietRestriction, setDietRestriction] = useState([]);
-  const [mealType, setMealType] = useState([]);
-  const [cultureType, setCultureType] = useState([]);
-
-  const recipesResult = useQuery({
-    queryKey: ["recipes"],
-    queryFn: () => getRecipes(),
-    initialData: [],
-  });
 
   function filterRecipes(r) {
     let matchingIngredients = false;
@@ -87,9 +89,7 @@ export function RecipesPage() {
 
     if (
       tags.length === 0 ||
-      !tags.find(
-        (tag) => !r.tags.find((rTag) => rTag.id === tag.id)
-      )
+      !tags.find((tag) => !r.tags.find((rTag) => rTag.id === tag.id))
     ) {
       matchingTags = true;
     }
@@ -117,40 +117,18 @@ export function RecipesPage() {
             return a.numMissingIngredients - b.numMissingIngredients;
         }
       });
-  }, [
-    recipesResult,
-    ingredients,
-    dietRestriction,
-    mealType,
-    cultureType,
-    sortRecipesBy,
-  ]);
-
-  const [favoriteStatus, setFavoriteStatus] = useState({});
-  const [ratings, setRatings] = useState({});
-
-  const handleToggleFavorite = (recipeId) => {
-    // Toggle the favorite state for the specific recipe
-    setFavoriteStatus((prevStatus) => ({
-      ...prevStatus,
-      [recipeId]: !prevStatus[recipeId],
-    }));
-  };
-
-  const handleRateRecipe = (recipeId, rating) => {
-    // Set the rating for the specific recipe
-    setRatings((prevRatings) => ({
-      ...prevRatings,
-      [recipeId]: rating,
-    }));
-  };
+  }, [recipesResult, ingredients, sortRecipesBy]);
 
   const auth = useAuth();
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Stack sx={{ marginBottom: 2 }} direction="column" justifyContent="center">
-        <FormControl sx={{ m: 1, }} size="small">
+      <Stack
+        sx={{ marginBottom: 2 }}
+        direction="column"
+        justifyContent="center"
+      >
+        <FormControl sx={{ m: 1 }} size="small">
           <Autocomplete
             multiple
             loading={ingredientsResult.isLoading}
@@ -164,127 +142,58 @@ export function RecipesPage() {
             )}
           />
         </FormControl>
-        <FormControl sx={{ m: 1, }} size="small">
+        <FormControl sx={{ m: 1 }} size="small">
           <Stack gap={1} flexDirection="row" flexWrap="wrap">
-            {tagsResult.data.sort((a, b) => {
-              const aSelected = tags.find(t => t.id === a.id)
-              const bSelected = tags.find(t => t.id === b.id)
-              if (aSelected && bSelected || !aSelected && !bSelected) {
-                return a.name.localeCompare(b.name)
-              }
-              if (aSelected) return -1;
-              if (bSelected) return 1;
-            }).map(tag => {
-              const selected = tags.find(t => t.id === tag.id)
-              return <Chip
-                key={tag.id}
-                label={tag.name}
-                onClick={() => {
-                  setTags(prevTags => {
-                    return [...prevTags, tag]
-                  })
-                }}
-                clickable={!selected}
-                onDelete={selected ? () => {
-                  setTags(prevTags => {
-                      return prevTags.filter(t => t.id !== tag.id)
-                  })
-                } : undefined}
-                variant={selected ? "filled" : "outlined"}
-                color={selected ? "primary" : "default"}
-              />
-            })}
+            {tagsResult.data
+              .sort((a, b) => {
+                const aSelected = tags.find((t) => t.id === a.id);
+                const bSelected = tags.find((t) => t.id === b.id);
+                if ((aSelected && bSelected) || (!aSelected && !bSelected)) {
+                  return a.name.localeCompare(b.name);
+                }
+                if (aSelected) return -1;
+                if (bSelected) return 1;
+              })
+              .map((tag) => {
+                const selected = tags.find((t) => t.id === tag.id);
+                return (
+                  <Chip
+                    key={tag.id}
+                    label={tag.name}
+                    onClick={() => {
+                      setTags((prevTags) => {
+                        return [...prevTags, tag];
+                      });
+                    }}
+                    clickable={!selected}
+                    onDelete={
+                      selected
+                        ? () => {
+                            setTags((prevTags) => {
+                              return prevTags.filter((t) => t.id !== tag.id);
+                            });
+                          }
+                        : undefined
+                    }
+                    variant={selected ? "filled" : "outlined"}
+                    color={selected ? "primary" : "default"}
+                  />
+                );
+              })}
           </Stack>
         </FormControl>
       </Stack>
       {recipesResult.isSuccess ? (
         <Grid container spacing={4}>
           {recipes.map((recipe) => {
-            const isFavorite = favoriteStatus[recipe.id] || false;
-            const rating = ratings[recipe.id] || 0;
-
             return (
-              <Grid item xs={12} sm={6} md={4} key={recipe.id}>
-                <Card elevation={4}>
-                  <CardMedia
-                    component="img"
-                    height={200}
-                    src={recipe.imageUrl}
-                    alt={recipe.name}
-                    sx={{ borderTopLeftRadius: 15, borderTopRightRadius: 15 }}
-                  />
-                  <CardContent>
-                    <Typography variant="h6" component="div" gutterBottom>
-                      {recipe.name}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      gutterBottom
-                    >
-                      {recipe.numMissingIngredients} more ingredients needed
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      gutterBottom
-                    >
-                      {recipe.averageCalories} calories per serving
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      gutterBottom
-                    >
-                      Prep Time: {recipe.prepTimeSeconds / 60} minutes
-                    </Typography>
-                    <Stack
-                      direction="row"
-                      justifyContent="flex-start"
-                      gap={1}
-                      flexWrap="wrap"
-                    >
-                      {recipe.tags.map((tag) => (
-                        <Chip
-                          key={tag.id}
-                          size="small"
-                          label={tag.name}
-                          color="secondary"
-                        />
-                      ))}
-                    </Stack>
-                  </CardContent>
-                  <CardActions>
-                    <Link to={`/recipes/${recipe.id}`}>
-                      <Button
-                        size="small"
-                        color="primary"
-                        variant="contained"
-                        target="_blank"
-                      >
-                        View Recipe
-                      </Button>
-                    </Link>
-                    {auth.user && (
-                      <>
-                        <IconButton color="primary" onClick={() => handleToggleFavorite(recipe.id)}>
-                          {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                        </IconButton>
-                        
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <IconButton
-                            key={star}
-                            color="primary"
-                            onClick={() => handleRateRecipe(recipe.id, star)}
-                          >
-                            {rating >= star ? <StarIcon /> : <StarBorderIcon />}
-                          </IconButton>
-                        ))}
-                      </>
-                    )}
-                  </CardActions>
-                </Card>
-              </Grid>
+              <RecipeCard
+                key={recipe.id}
+                recipe={recipe}
+                showFavorite={!!auth.user}
+                onFavorite={() => onFavoriteRecipe(recipe.id)}
+                onUnfavorite={() => onUnfavoriteRecipe(recipe.id)}
+              />
             );
           })}
         </Grid>
