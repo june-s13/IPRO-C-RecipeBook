@@ -3,7 +3,7 @@ import { convertRecipe } from "./recipes.js";
 
 export async function getFavoriteRecipesOfUser(userId) {
   const res = await pool.query(
-    "SELECT id, name, averagecalories, preptimeseconds, imageurl, directions, isFavorite, rating, COUNT(rating) numRatings, AVG(rating) averageRating FROM Recipe LEFT JOIN User_Recipe ON User_Recipe.recipeId=Recipe.id WHERE User_Recipe.userId=$1 AND User_Recipe.isFavorite=TRUE GROUP by id, name, isFavorite, rating;",
+    "SELECT id, name, averageCalories, prepTimeSeconds, imageUrl, directions, ThisUser.isFavorite isFavorite, ThisUser.rating rating, COUNT(User_Recipe.rating) numRatings, AVG(User_Recipe.rating) averageRating FROM Recipe LEFT JOIN (SELECT * FROM User_Recipe WHERE userId=$1 OR userId IS NULL) ThisUser ON Recipe.id=ThisUser.recipeId LEFT JOIN User_Recipe on Recipe.id=User_Recipe.recipeId WHERE ThisUser.isFavorite=TRUE GROUP BY id, name, ThisUser.isFavorite, ThisUser.rating;",
     [userId]
   );
 

@@ -16,6 +16,7 @@ import { RecipeRating, RecipeUserRating } from "../../components/rating";
 import { favoriteRecipe, unfavoriteRecipe } from "../../api/favorites";
 import { FavoriteButton } from "../../components/recipe-card";
 import { clearRecipeRating, rateRecipe } from "../../api/ratings";
+import { useAuth } from "../../context/AuthContext";
 
 export function RecipePage() {
   const { recipeId: recipeIdUnparsed } = useParams();
@@ -53,14 +54,14 @@ export function RecipePage() {
   const rateRecipeMutation = useMutation({
     mutationFn: ({ recipeId, rating }) => rateRecipe(recipeId, rating),
     onSuccess: (_, { recipeId, rating }) => {
-      queryClient.invalidateQueries(["recipes", recipeId])
+      queryClient.invalidateQueries(["recipes", recipeId]);
     },
   });
 
   const clearRecipeRatingMutation = useMutation({
     mutationFn: clearRecipeRating,
     onSuccess: (_, recipeId) => {
-      queryClient.invalidateQueries(["recipes", recipeId])
+      queryClient.invalidateQueries(["recipes", recipeId]);
     },
   });
 
@@ -83,6 +84,9 @@ export function RecipePage() {
     await clearRecipeRatingMutation.mutateAsync(recipe.id);
   };
 
+  const auth = useAuth();
+  const authenticated = !!auth.user;
+
   return (
     <>
       {recipeResult.isSuccess ? (
@@ -97,21 +101,25 @@ export function RecipePage() {
               <Typography variant="h4" component="div" gutterBottom>
                 {recipe.name}
               </Typography>
-              <FavoriteButton
-                isFavorite={recipe.isFavorite}
-                onUnfavorite={onUnfavoriteRecipe}
-                onFavorite={onFavoriteRecipe}
-              />
+              {authenticated ? (
+                <FavoriteButton
+                  isFavorite={recipe.isFavorite}
+                  onUnfavorite={onUnfavoriteRecipe}
+                  onFavorite={onFavoriteRecipe}
+                />
+              ) : null}
             </Box>
             <RecipeRating
               averageRating={recipe.averageRating}
               numRatings={recipe.numRatings}
             />
-            <RecipeUserRating
-              rating={recipe.rating}
-              onRatingChange={(e, rating) => onRateRecipe(rating)}
-              onClearRating={onClearRecipeRating}
-            />
+            {authenticated ? (
+              <RecipeUserRating
+                rating={recipe.rating}
+                onRatingChange={(e, rating) => onRateRecipe(rating)}
+                onClearRating={onClearRecipeRating}
+              />
+            ) : null}
             <Typography
               variant="body"
               color="text.secondary"

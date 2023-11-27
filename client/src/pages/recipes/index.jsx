@@ -190,7 +190,7 @@ export function RecipesPage() {
               <RecipeCard
                 key={recipe.id}
                 recipe={recipe}
-                showFavorite={!!auth.user}
+                favoriteHidden={!auth.user}
                 onFavorite={() => onFavoriteRecipe(recipe.id)}
                 onUnfavorite={() => onUnfavoriteRecipe(recipe.id)}
               />

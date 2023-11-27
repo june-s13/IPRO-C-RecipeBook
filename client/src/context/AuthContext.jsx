@@ -1,11 +1,14 @@
 import { createContext, useContext } from "react";
 import { useCookies } from "react-cookie";
 import * as auth from "../api/auth";
+import { useQueryClient } from "react-query";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [cookies, setCookies] = useCookies();
+
+  const queryClient = useQueryClient()
 
   const user = cookies.user;
 
@@ -21,6 +24,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     await auth.logout();
     setCookies("user", null);
+    queryClient.clear()
   };
 
   const register = async (email, password) => {

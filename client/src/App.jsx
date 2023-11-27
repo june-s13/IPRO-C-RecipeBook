@@ -94,11 +94,11 @@ function App() {
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <CookiesProvider>
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
             <RouterProvider router={router} />
-          </QueryClientProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </QueryClientProvider>
       </CookiesProvider>
     </ThemeProvider>
   );
